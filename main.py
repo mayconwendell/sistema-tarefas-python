@@ -3,11 +3,13 @@ import json
 def menu(tarefas):
 
     while True:
-        print('1 - Adicionar tarefa' \
+        print('\n========== MENU =========')
+        print('\n1 - Adicionar tarefa' \
         '\n2 - Ver tarefas' \
         '\n3 - Remover tarefas' \
         '\n4 - Marcar como concluída' \
-        '\n5 - Sair')
+        '\n5 - Sair' \
+        '\n')
         try: 
             opcao = int(input('Digite a opção que deseja: '))
 
@@ -39,14 +41,52 @@ def adicionar_tarefas(tarefas):
     while continuar == 's':
 
         nome = input('Digite a tarefa que deseja adicionar: ')
+        existe = False
 
-        novas_tarefas = {
-            'nome': nome,
-            'concluida': False
-        }
+        for tarefa in tarefas:
 
-        tarefas.append(novas_tarefas)
-        print('Tarefa adicionada com sucesso!')
+            if nome == tarefa['nome']:
+                existe = True
+                
+        if existe == True:
+            print('A tarefa digitada já está adicionada!')
+
+        else:
+
+            print('1 - Alta' \
+            '\n2 - Média' \
+            '\n3 - Baixa')
+
+            try:
+                prioridade = int(input('Prioridade da tarefa: '))
+                prioridade_valida = True
+
+                if prioridade == 1:
+                    prioridade = "Alta"
+
+                elif prioridade == 2:
+                    prioridade = "Média"
+
+                elif prioridade == 3:
+                    prioridade = "Baixa"
+                
+                else:
+                    print('Você digitou um número inválido')
+                    prioridade_valida = False
+
+                if prioridade_valida == True:
+
+                    novas_tarefas = {
+                        'nome': nome,
+                        'concluida': False,
+                        'prioridade': prioridade
+                    }
+
+                    tarefas.append(novas_tarefas)
+                    print('Tarefa adicionada com sucesso!')
+
+            except ValueError:
+                print('Valor digitado inválido!')
 
         continuar = input('Deseja adicionar uma nova tarefa? (s / n) ').lower().strip()
 
@@ -56,12 +96,12 @@ def ver_tarefas(tarefas):
         return
 
     else:
-        print('==========Lista de Tarefas=========')
+        print('\n========== LISTA DE TAREFAS =========\n')
         for i, tarefa in enumerate(tarefas):
 
-            status = "Concluida" if tarefa['concluida'] else "Pendente"
+            status = "✅ Concluida" if tarefa['concluida'] else "⏳ Pendente"
 
-            print(f"{i + 1} - {tarefa['nome']} - {status}")        
+            print(f"{i + 1} - {tarefa['nome']} - {status} - {tarefa['prioridade']}")        
         
 
 def marcar_como_concluida(tarefas):
@@ -127,7 +167,7 @@ def remover_tarefas(tarefas):
 def salvar_tarefas(tarefas):
 
     with open("tarefas.json", "w") as arquivo:
-        json.dump(tarefas, arquivo)
+        json.dump(tarefas, arquivo, indent=4)
 
 
 def carregar_tarefas():

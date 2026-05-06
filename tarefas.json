@@ -1,0 +1,17 @@
+[
+    {
+        "nome": "Estudar Python",
+        "concluida": false,
+        "prioridade": "Alta"
+    },
+    {
+        "nome": "Revisar mat\u00e9ria da prova",
+        "concluida": false,
+        "prioridade": "Alta"
+    },
+    {
+        "nome": "Estudar Git e GitHub",
+        "concluida": false,
+        "prioridade": "M\u00e9dia"
+    }
+]
