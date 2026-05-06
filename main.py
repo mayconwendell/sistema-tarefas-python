@@ -5,7 +5,8 @@ def menu():
     while True:
         print('1 - Adicionar tarefa' \
         '\n2 - Ver tarefas' \
-        '\n3 - Sair')
+        '\n3 - Marcar como concluída' \
+        '\n4 - Sair')
         try: 
             opcao = int(input('Digite a opção que deseja: '))
 
@@ -16,6 +17,9 @@ def menu():
                 ver_tarefas()
             
             elif opcao == 3:
+                marcar_como_concluida()
+
+            elif opcao == 4:
                 print('Programa encerrado!')
                 break
             
@@ -52,7 +56,39 @@ def ver_tarefas():
         for i, tarefa in enumerate(tarefas):
 
             status = "Concluida" if tarefa['concluida'] else "Pendente"
-            
+
             print(f"{i + 1} - {tarefa['nome']} - {status}")        
         
+
+def marcar_como_concluida():
+    
+    if not tarefas:
+        print('Não tem tarefas cadastradas!')
+        return
+    else:
+        continuar = 's'
+
+        while continuar == 's':
+            ver_tarefas()
+            try:
+                    
+                pergunta = int(input('Qual tarefa deseja marcar como concluída: '))
+
+                if pergunta > 0 and pergunta <= len(tarefas):    
+                    indice = pergunta - 1
+                    if tarefas[indice]['concluida'] == False:
+
+                        tarefas[indice]['concluida'] = True
+                        print('A tarefa foi marcada como concluída!')
+
+                    else:
+                        print('A tarefa escolhida já foi concluída!')    
+                else:
+                    print('Você digitou uma opção inválida!')
+
+            except ValueError:
+                print('Valor digitado inválido!')
+
+            continuar = input('Deseja marcar outra tarefa como concluída? (s / n) ').lower().strip()
+            
 menu()
