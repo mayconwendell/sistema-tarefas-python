@@ -5,8 +5,9 @@ def menu():
     while True:
         print('1 - Adicionar tarefa' \
         '\n2 - Ver tarefas' \
-        '\n3 - Marcar como concluída' \
-        '\n4 - Sair')
+        '\n3 - Remover tarefas' \
+        '\n4 - Marcar como concluída' \
+        '\n5 - Sair')
         try: 
             opcao = int(input('Digite a opção que deseja: '))
 
@@ -17,9 +18,11 @@ def menu():
                 ver_tarefas()
             
             elif opcao == 3:
-                marcar_como_concluida()
+                remover_tarefas()
 
             elif opcao == 4:
+                marcar_como_concluida()
+            elif opcao == 5:
                 print('Programa encerrado!')
                 break
             
@@ -69,13 +72,14 @@ def marcar_como_concluida():
         continuar = 's'
 
         while continuar == 's':
-            ver_tarefas()
+
             try:
-                    
+                ver_tarefas()         
                 pergunta = int(input('Qual tarefa deseja marcar como concluída: '))
 
                 if pergunta > 0 and pergunta <= len(tarefas):    
                     indice = pergunta - 1
+
                     if tarefas[indice]['concluida'] == False:
 
                         tarefas[indice]['concluida'] = True
@@ -90,5 +94,33 @@ def marcar_como_concluida():
                 print('Valor digitado inválido!')
 
             continuar = input('Deseja marcar outra tarefa como concluída? (s / n) ').lower().strip()
-            
+
+def remover_tarefas():
+    
+    if not tarefas:
+        print('Não tem tarefas cadastradas!')
+        return
+    else:
+        continuar = 's'
+        
+        while continuar == 's':
+            try:
+
+                ver_tarefas()
+                pergunta = int(input('Qual tarefa deseja remover: '))
+
+                if pergunta > 0 and pergunta <= len(tarefas):
+                    
+                    indice = pergunta - 1
+                    tarefas.pop(indice)
+                    print('Tarefa removida com sucesso!')
+
+                else:
+                    print('Você digitou um opção inválida!')
+
+            except ValueError:
+                print('Valor digitado inválido!')
+
+            continuar = input('Deseja remover outra tarefa? (s / n) ').lower().strip()
+
 menu()
