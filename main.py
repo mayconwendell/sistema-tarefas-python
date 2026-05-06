@@ -1,6 +1,6 @@
-tarefas = []
+import json
 
-def menu():
+def menu(tarefas):
 
     while True:
         print('1 - Adicionar tarefa' \
@@ -12,18 +12,19 @@ def menu():
             opcao = int(input('Digite a opção que deseja: '))
 
             if opcao == 1:
-                adicionar_tarefas()
+                adicionar_tarefas(tarefas)
             
             elif opcao == 2:
-                ver_tarefas()
+                ver_tarefas(tarefas)
             
             elif opcao == 3:
-                remover_tarefas()
+                remover_tarefas(tarefas)
 
             elif opcao == 4:
-                marcar_como_concluida()
+                marcar_como_concluida(tarefas)
             elif opcao == 5:
                 print('Programa encerrado!')
+                salvar_tarefas(tarefas)
                 break
             
             else:
@@ -32,7 +33,7 @@ def menu():
         except ValueError:
             print('Você digitou um valor inválido!')
 
-def adicionar_tarefas():
+def adicionar_tarefas(tarefas):
     continuar = 's'
 
     while continuar == 's':
@@ -49,7 +50,7 @@ def adicionar_tarefas():
 
         continuar = input('Deseja adicionar uma nova tarefa? (s / n) ').lower().strip()
 
-def ver_tarefas():
+def ver_tarefas(tarefas):
     if not tarefas:
         print('Não tem tarefas cadastradas!')
         return
@@ -63,7 +64,7 @@ def ver_tarefas():
             print(f"{i + 1} - {tarefa['nome']} - {status}")        
         
 
-def marcar_como_concluida():
+def marcar_como_concluida(tarefas):
     
     if not tarefas:
         print('Não tem tarefas cadastradas!')
@@ -74,7 +75,7 @@ def marcar_como_concluida():
         while continuar == 's':
 
             try:
-                ver_tarefas()         
+                ver_tarefas(tarefas)         
                 pergunta = int(input('Qual tarefa deseja marcar como concluída: '))
 
                 if pergunta > 0 and pergunta <= len(tarefas):    
@@ -95,7 +96,7 @@ def marcar_como_concluida():
 
             continuar = input('Deseja marcar outra tarefa como concluída? (s / n) ').lower().strip()
 
-def remover_tarefas():
+def remover_tarefas(tarefas):
     
     if not tarefas:
         print('Não tem tarefas cadastradas!')
@@ -106,7 +107,7 @@ def remover_tarefas():
         while continuar == 's':
             try:
 
-                ver_tarefas()
+                ver_tarefas(tarefas)
                 pergunta = int(input('Qual tarefa deseja remover: '))
 
                 if pergunta > 0 and pergunta <= len(tarefas):
@@ -123,4 +124,22 @@ def remover_tarefas():
 
             continuar = input('Deseja remover outra tarefa? (s / n) ').lower().strip()
 
-menu()
+def salvar_tarefas(tarefas):
+
+    with open("tarefas.json", "w") as arquivo:
+        json.dump(tarefas, arquivo)
+
+
+def carregar_tarefas():
+    try:
+            
+        with open("tarefas.json", "r") as arquivo:
+            dados = json.load(arquivo)
+            return dados
+        
+    except FileNotFoundError:
+        tarefas = []
+        return tarefas
+    
+tarefas = carregar_tarefas()
+menu(tarefas)
