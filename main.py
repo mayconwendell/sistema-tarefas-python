@@ -8,8 +8,8 @@ def menu(tarefas):
         '\n2 - Ver tarefas' \
         '\n3 - Remover tarefas' \
         '\n4 - Marcar como concluída' \
-        '\n5 - Sair' \
-        '\n')
+        '\n5 - Editar tarefas' \
+        '\n6 - Sair')
         try: 
             opcao = int(input('Digite a opção que deseja: '))
 
@@ -24,7 +24,11 @@ def menu(tarefas):
 
             elif opcao == 4:
                 marcar_como_concluida(tarefas)
+
             elif opcao == 5:
+                editar_tarefas(tarefas)
+
+            elif opcao == 6:
                 print('Programa encerrado!')
                 salvar_tarefas(tarefas)
                 break
@@ -103,6 +107,72 @@ def ver_tarefas(tarefas):
 
             print(f"{i + 1} - {tarefa['nome']} - {status} - {tarefa['prioridade']}")        
         
+
+def editar_tarefas(tarefas):
+    
+    if not tarefas:
+        print('Não tem tarefas cadastradas!')
+    else:
+        continuar = 's'
+        while continuar == 's':
+
+            try:
+
+                ver_tarefas(tarefas)
+
+                pergunta = int(input('Qual tarefa deseja editar: '))
+
+                if pergunta > 0 and pergunta <= len(tarefas):
+                    indice = pergunta - 1
+                    print('1 - Editar nome'
+                    '\n2 - Editar prioridade'
+                    '\n3 - Voltar')
+
+                    opcao = int(input('Qual opção deseja: '))
+                
+                    if opcao == 1:
+                        novo_nome = input('Digite o novo nome: ')
+                        tarefas[indice]['nome'] = novo_nome
+                        print('Nome alterado com sucesso!')
+                    
+                    elif opcao == 2:
+
+                        print('1 - Alta' \
+                            '\n2 - Média' \
+                            '\n3 - Baixa')
+                        
+                        nova_prioridade = int(input('Qual a nova prioridade: '))
+                        prioridade_valida = True
+
+                        if nova_prioridade  == 1:
+                            nova_prioridade  = "Alta"
+
+                        elif nova_prioridade  == 2:
+                            nova_prioridade  = "Média"
+
+                        elif nova_prioridade == 3:
+                            nova_prioridade = "Baixa"
+                        
+                        else:
+                            print('Você digitou um número inválido')
+                            prioridade_valida = False
+
+                        if prioridade_valida == True:
+                            tarefas[indice]['prioridade'] = nova_prioridade
+                            print('Prioridade alterada com sucesso!')
+
+                    elif opcao == 3:
+                        break
+                    
+                    else:
+                        print('Opção inválida!')
+                else:
+                    print('Você digitou uma tarefa inválida!')
+                        
+            except ValueError:
+                print('Você digitou um valor inválido!')
+            
+            continuar = input('Deseja editar outra tarefa? (s / n) ').lower().strip()
 
 def marcar_como_concluida(tarefas):
     
