@@ -9,7 +9,7 @@ def menu(tarefas):
         '\n3 - Remover tarefas' \
         '\n4 - Marcar como concluída' \
         '\n5 - Editar tarefas' \
-        '\n6 - Sair')
+        '\n6 - Sair\n')
         try: 
             opcao = int(input('Digite a opção que deseja: '))
 
@@ -59,7 +59,7 @@ def adicionar_tarefas(tarefas):
 
             print('1 - Alta' \
             '\n2 - Média' \
-            '\n3 - Baixa')
+            '\n3 - Baixa\n')
 
             try:
                 prioridade = int(input('Prioridade da tarefa: '))
@@ -100,14 +100,56 @@ def ver_tarefas(tarefas):
         return
 
     else:
-        print('\n========== LISTA DE TAREFAS =========\n')
-        for i, tarefa in enumerate(tarefas):
+        print("\n1 - Ver todas"
+        "\n2 - Ver concluídas"
+        "\n3 - Ver pendentes"
+        "\n4 - Ver prioridade alta" \
+        "\n5 - Ver prioridade média" \
+        "\n6 - Ver prioridade baixa"
+        "\n7 - Voltar\n")
+        try:
+                
+            opcao = int(input('Digite a opção que deseja: '))
 
-            status = "✅ Concluida" if tarefa['concluida'] else "⏳ Pendente"
+            if opcao < 1 or opcao > 7:
+                    print("Opção inválida!")
+                    return
+            
+            elif opcao == 7:
+                return
+                
+            else:
 
-            print(f"{i + 1} - {tarefa['nome']} - {status} - {tarefa['prioridade']}")        
-        
+                for i, tarefa in enumerate(tarefas):
 
+                    status = "✅ Concluida" if tarefa['concluida'] else "⏳ Pendente"
+            
+                    if opcao == 1:
+                        print(f"{i + 1} - {tarefa['nome']} - {status} - {tarefa['prioridade']}")        
+                
+                    elif opcao == 2:
+                        if tarefa['concluida']:
+                            print(f"{i + 1} - {tarefa['nome']} - {status}")
+
+                    elif opcao == 3:
+                        if not tarefa['concluida']:
+                            print(f"{i + 1} - {tarefa['nome']} - {status} - {tarefa['prioridade']}")
+                    
+                    elif opcao == 4:
+                        if tarefa['prioridade'] == "Alta":
+                            print(f"{i + 1} - {tarefa['nome']} - {status} - {tarefa['prioridade']}")
+
+                    elif opcao == 5:
+                        if tarefa['prioridade'] == "Média":
+                            print(f"{i + 1} - {tarefa['nome']} - {status} - {tarefa['prioridade']}")
+
+                    elif opcao == 6: 
+                        if tarefa['prioridade'] == "Baixa":
+                            print(f"{i + 1} - {tarefa['nome']} - {status} - {tarefa['prioridade']}")
+
+        except ValueError:
+            print('Você digitou um valor inválido!')
+             
 def editar_tarefas(tarefas):
     
     if not tarefas:
@@ -126,7 +168,7 @@ def editar_tarefas(tarefas):
                     indice = pergunta - 1
                     print('1 - Editar nome'
                     '\n2 - Editar prioridade'
-                    '\n3 - Voltar')
+                    '\n3 - Voltar\n')
 
                     opcao = int(input('Qual opção deseja: '))
                 
@@ -139,7 +181,7 @@ def editar_tarefas(tarefas):
 
                         print('1 - Alta' \
                             '\n2 - Média' \
-                            '\n3 - Baixa')
+                            '\n3 - Baixa\n')
                         
                         nova_prioridade = int(input('Qual a nova prioridade: '))
                         prioridade_valida = True
