@@ -1,17 +1,36 @@
-# Sistema de Tarefas em Python
+# Sistema de Gerenciamento de Tarefas
 
-Aplicação de terminal para gerenciamento de tarefas com salvamento em JSON.
+Projeto desenvolvido em Python com foco em prática de lógica de programação, manipulação de arquivos JSON e organização de sistemas no terminal.
 
 ## Funcionalidades
-- Adicionar tarefa
-- Listar tarefas
-- Marcar tarefa como concluída
-- Remover tarefas
-- Salvar e carregar dados automaticamente
 
-## Tecnologias
+- Adicionar tarefas
+- Listar tarefas
+- Remover tarefas
+- Marcar tarefas como concluídas
+- Editar tarefas
+- Definir prioridades
+- Salvamento automático com JSON
+- Tratamento de erros e validações
+
+---
+
+## Tecnologias utilizadas
+
 - Python
 - JSON
+- Git
+- GitHub
 
-## Objetivo
-Projeto desenvolvido para praticar lógica de programação, organização de código e manipulação de dados em Python.
+---
+
+## Estrutura das tarefas
+
+Cada tarefa é armazenada no formato:
+
+```json
+{
+    "nome": "Estudar Python",
+    "concluida": false,
+    "prioridade": "Alta"
+}
